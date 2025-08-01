@@ -1,0 +1,88 @@
+                                                                                   DATABASE PROJECT
+1)	Users Table (Common for Workers & Employers)
+    
+        CREATE TABLE users (
+    user_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100),
+    email VARCHAR(100) UNIQUE,
+    phone VARCHAR(15),
+    password VARCHAR(255),
+    user_type ENUM('worker', 'employer') NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+2)Worker profile Table
+CREATE TABLE worker_profiles (
+    worker_id INT PRIMARY KEY,
+    gender VARCHAR(10),
+    age INT,
+    experience_years INT,
+    location VARCHAR(100),
+    bio TEXT,
+    FOREIGN KEY (worker_id) REFERENCES users(user_id)
+);
+
+3)skills Table
+CREATE TABLE skills (
+    skill_id INT PRIMARY KEY AUTO_INCREMENT,
+    skill_name VARCHAR(100) UNIQUE
+);
+
+4)Worker Skills Table
+CREATE TABLE worker_skills (
+    worker_id INT,
+    skill_id INT,
+    FOREIGN KEY (worker_id) REFERENCES worker_profiles(worker_id),
+    FOREIGN KEY (skill_id) REFERENCES skills(skill_id),
+    PRIMARY KEY(worker_id, skill_id)
+);
+
+
+5) Job Post Table
+CREATE TABLE jobs (
+    job_id INT PRIMARY KEY AUTO_INCREMENT,
+    employer_id INT,
+    title VARCHAR(100),
+    description TEXT,
+    location VARCHAR(100),
+    skill_required INT,
+    salary_range VARCHAR(50),
+    posted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (employer_id) REFERENCES users(user_id),
+    FOREIGN KEY (skill_required) REFERENCES skills(skill_id)
+);
+
+6)Applications Table
+CREATE TABLE applications (
+    application_id INT PRIMARY KEY AUTO_INCREMENT,
+    job_id INT,
+    worker_id INT,
+    status ENUM('applied', 'selected', 'rejected') DEFAULT 'applied',
+    applied_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (job_id) REFERENCES jobs(job_id),
+    FOREIGN KEY (worker_id) REFERENCES worker_profiles(worker_id)
+);
+
+7)Ratings Table
+
+CREATE TABLE ratings (
+    rating_id INT PRIMARY KEY AUTO_INCREMENT,
+    worker_id INT,
+    employer_id INT,
+    rating INT CHECK(rating BETWEEN 1 AND 5),
+    review TEXT,
+    rated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (worker_id) REFERENCES worker_profiles(worker_id),
+    FOREIGN KEY (employer_id) REFERENCES users(user_id)
+);
+
+
+
+
+
+
+
+
+
+
+
