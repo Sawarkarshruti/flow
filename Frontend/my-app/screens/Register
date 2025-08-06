@@ -1,0 +1,69 @@
+import { useState } from "react";
+import { Text, View } from "react-native";
+import { Button, Checkbox, TextInput } from "react-native-paper";
+
+function Register(props) {
+  const [user, setuser] = useState({
+    username: "",
+    email: "",
+    password: "",
+    phone: "",
+  });
+
+  return (
+    <View style={{ margin: 50, padding: 50}}>
+      <Text style={{ textAlign: "center" }}>Register Here😊</Text>
+      <TextInput
+        mode="outlined"
+        value={user.username}
+        label="Enter Username"
+        onChangeText={(value) => setuser({ ...user, username: value })}
+      />
+      <TextInput
+        mode="outlined"
+        value={user.email}
+        label="Enter Email"
+        onChangeText={(value) => setuser({ ...user, email: value })}
+      />
+      <TextInput
+        mode="outlined"
+        value={user.password}
+        label="Enter Password"
+        onChangeText={(value) => setuser({ ...user, password: value })}
+      />
+      <TextInput
+        mode="outlined"
+        value={user.phone}
+        label="Enter Phone"
+        onChangeText={(value) => setuser({ ...user, phone: value })}
+      />
+       <Checkbox.Item
+        label="Job Seeker"
+        status={user.role === "seeker" ? "checked" : "unchecked"}
+        onPress={() => setuser({ ...user, role: "seeker" })}
+      />
+      <Checkbox.Item
+        label="Employer"
+        status={user.role === "employer" ? "checked" : "unchecked"}
+        onPress={() => setuser({ ...user, role: "employer" })}
+      />
+
+      <Button
+        onPress={() => {
+          props.navigation.navigate("go-login");
+        }}
+      >
+        Sign Up
+      </Button>
+      <Button
+        onPress={() => {
+          props.navigation.navigate("go-otp");
+        }}
+      >
+        Get otp
+      </Button>
+    </View>
+  );
+}
+
+export default Register;
