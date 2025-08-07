@@ -1,0 +1,28 @@
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import Login from "./login";
+import Register from "./register";
+import OTP from "./otp";
+import SeekerDashboard from "./seekerdashboard";
+import jobdetails from "./jobdetails";
+import JobList from "./joblist";
+import AdminPanel from "./adminpanel";
+
+function Launcher() {
+  var Stack = createNativeStackNavigator();
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="go-login" component={Login} />
+        <Stack.Screen name="go-register" component={Register} />
+        <Stack.Screen name="go-otp" component={OTP} />
+        <Stack.Screen name="go-seeker-dashboard" component={SeekerDashboard} />
+        <Stack.Screen name="go-job-list" component={JobList} />
+        <Stack.Screen name="JobDetail" component={jobdetails} />
+        <Stack.Screen name="go-admin-panel" component={AdminPanel} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+export default Launcher;
